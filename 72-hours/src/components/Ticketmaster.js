@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 
 const Ticketmaster = (props) => {
     const [events, setEvents] = useState('');
@@ -7,13 +7,18 @@ const Ticketmaster = (props) => {
         fetch(`https://app.ticketmaster.com/discovery/v2/events.json?&latlong=${props.lat},${props.lng}&apikey=pfyF9lEGdQN8wKexFoe6ulE5qcZigjRG&size=1`)
         .then(res => res.json())
         .then(res =>{
+            console.log(res.events)
           setEvents(res._embedded.events[0].name)    
         })
     }
+
+    useEffect(()=>{
+        handleClick();
+    })
+
     return (
         <div>
             <p>{events}</p>
-            <button onClick={handleClick}>Events</button>
         </div>
     )
 }

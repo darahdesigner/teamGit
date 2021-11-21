@@ -3,12 +3,14 @@ import NasaApi from "./components/NasaApi";
 import Weather from "./components/Weather";
 import Ticketmaster from "./components/Ticketmaster";
 import styled from 'styled-components'
+import Delayed from "./components/Delayed";
+import Loading from "./components/Loading";
 
 
 const Main = styled.div `
 background: rgb(255,253,208);
-background: linear-gradient(90deg, rgba(255,253,208,1) 0%, rgba(0,128,128,1) 35%, rgba(255,253,208,1) 100%);
-height: 100vh;
+background: linear-gradient(90deg, rgba(255,253,208,1) 0%, rgba(255,255,255,1) 100%);
+height: 110vh;
 width: 100%;
 margin-top: -21px;
 `
@@ -23,37 +25,42 @@ float: right;
 `
 
 const WeatherStyle = styled.div`
-border: 1px solid black;
 width: 50%;
 height: 50%;
 `
 
 const WeatherBox = styled.div`
-  border: 1px solid black;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `
 const TicketStyle = styled.div`
-border: 1px solid black;
 width: 50%;
 height: 50%;
+`;
+
+const TicketBox = styled.div`
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
 `
 
-function App() {
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
+function App(props) {
+  const [lat, setLat] = useState({});
+  const [lng, setLng] = useState({});
   const [status, setStatus] = useState(null);
+  const [loading, setLoading]= useState(false)
 
-  
 
-  const getLocation = () => {
+
+  const getLocation = async () => {
     if (!navigator.geolocation) {
       setStatus('Geolocation is not supported by your browser');
     } else {
       setStatus('Locating...');
-      navigator.geolocation.getCurrentPosition((position) => {
+      await navigator.geolocation.getCurrentPosition((position) => {
         setStatus(null);
         setLat(position.coords.latitude);
         setLng(position.coords.longitude);
@@ -63,15 +70,24 @@ function App() {
     }
   }
  
-  useEffect(() => {
-    getLocation();
-  }, []);
+useEffect(() => {
+  getLocation();
+  setLoading(true)
+    }, [])
+
+    if(loading === true) {
+      <NasaApi />
+    } else {
+      return 'Loading...'
+    }
 
 
   return (
     <Main  className="App">
+      <Loading />
+      <Delayed>
       <Nasa>
-      <NasaApi lat={lat} lng={lng}/>
+      <NasaApi lat={lat} lng={lng} />
       </Nasa>
       <WeatherStyle>
         <WeatherBox>
@@ -79,10 +95,11 @@ function App() {
       </WeatherBox>
       </WeatherStyle>
       <TicketStyle>
-        <TicketBox>
+      <TicketBox>
       <Ticketmaster lat={lat} lng={lng} />
       </TicketBox>
       </TicketStyle>
+      </Delayed>
     </Main>
   );
 }
