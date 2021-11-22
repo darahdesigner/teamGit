@@ -18,10 +18,11 @@ margin-top: -21px;
 const Nasa = styled.div`
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: start;
 width: 50%;
 height: 100vh;
 float: right;
+
 `
 
 const WeatherStyle = styled.div`
@@ -34,6 +35,7 @@ const WeatherBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 200px;
 `
 const TicketStyle = styled.div`
 width: 50%;
@@ -47,13 +49,16 @@ justify-content: center;
 align-items: center;
 `
 
+const MainC = styled.div`
+width: 50%;
+margin: auto;
+`
+
 function App(props) {
   const [lat, setLat] = useState({});
   const [lng, setLng] = useState({});
   const [status, setStatus] = useState(null);
   const [loading, setLoading]= useState(false)
-
-
 
   const getLocation = async () => {
     if (!navigator.geolocation) {
@@ -86,6 +91,7 @@ useEffect(() => {
     <Main  className="App">
       <Loading />
       <Delayed>
+        <MainC>
       <Nasa>
       <NasaApi lat={lat} lng={lng} />
       </Nasa>
@@ -99,6 +105,7 @@ useEffect(() => {
       <Ticketmaster lat={lat} lng={lng} />
       </TicketBox>
       </TicketStyle>
+      </MainC>
       </Delayed>
     </Main>
   );

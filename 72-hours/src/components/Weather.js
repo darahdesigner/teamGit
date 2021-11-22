@@ -6,7 +6,7 @@ const Img = styled.img`
 height: 100px;
 width: 100px;
 position: absolute;
-margin-left: 230px;
+margin-left: 180px;
 margin-top: -10px;
 `
 
@@ -29,6 +29,7 @@ const Container = styled.div`
 display: flex;
 justify-content: space-around;
 margin-top: 20px;
+border: 1px solid black;
 `
 
 const Button = styled.div`
@@ -44,7 +45,10 @@ color: white;
 margin-top: 15px;
 `
 const Desc = styled.div`
-
+border: 1px solid black;
+text-align: center;
+margin-top: 10px;
+padding: 10px;
 `
 
 
@@ -56,6 +60,7 @@ const Weather = (props) => {
   const conWeather = Math.trunc(weatherF);
   const [unit, setUnit] = useState('')
   const [descrip, setDescrip] = useState('')
+  const [feel, setFeel] = useState('')
 
   const handleClick = () => {
     fetch(
@@ -69,7 +74,9 @@ const Weather = (props) => {
         console.log(res);
         console.log(props.lng);
         console.log(props.lat);
-        setDescrip(res.weather[0].description)
+        let upper = res.weather[0].description
+        let editD = upper.toUpperCase();
+        setDescrip(editD)
       });
   };
 
@@ -88,8 +95,9 @@ const Weather = (props) => {
       <h2>{nameCity} </h2>
       <Img src={icon}></Img>
       </IconA>
+      <Desc>{descrip}</Desc>
       <Container>
-          <Desc>{descrip}</Desc>
+          
       <Temp>Temp:</Temp>
       <Wdes>{conWeather}&#8457;</Wdes>
       <Button>C</Button>

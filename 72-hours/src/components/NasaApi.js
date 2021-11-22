@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Img = styled.img`
-height: 600px;
-width: 600px;
-border-radius: 1000px;
+height: 300px;
+width: 300px;
+border-radius: 100px;
+margin-left: 50px;
+margin-top: -100px;
 `;
 
 const NasaApi = (props) => {
