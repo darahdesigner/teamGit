@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
   position: absolute;
-  height: 100vh;
+  height: 10vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -31,6 +31,7 @@ const H1 = styled.div`
   animation-direction: forwards;
   animation-iteration-count: 1;
 `;
+
 
 const Loading = () => {
   return (

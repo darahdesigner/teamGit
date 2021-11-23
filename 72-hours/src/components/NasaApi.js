@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Img = styled.img`
-height: 300px;
-width: 300px;
-border-radius: 100px;
-margin-left: 50px;
-margin-top: -100px;
+height: 500px;
+width: 500px;
+border-radius: 10px;
+margin-left: 80px;
+margin-top: -60px;
 `;
 
 const NasaApi = (props) => {
@@ -30,7 +30,7 @@ const NasaApi = (props) => {
 
   useEffect(()=> {
     handleClick();
-  }, [])
+  },[])
 
   return (
     <div>

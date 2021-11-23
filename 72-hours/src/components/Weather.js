@@ -1,66 +1,73 @@
 import React, { useEffect, useState } from "react";
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 const Img = styled.img`
-height: 100px;
-width: 100px;
-position: absolute;
-margin-left: 180px;
-margin-top: -10px;
-`
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  margin-left: 250px;
+  margin-top: -10px;
+`;
 
 const IconA = styled.div`
-display: flex;
-position: relative;
-border: 1px solid black;
-width: 35vh;
-padding: 10px 40px;
-`
+  display: flex;
+  position: relative;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 35vh;
+  padding: 10px 40px;
+  background: white;
+`;
 const Wdes = styled.div`
-font-size: 40px;
-`
+  font-size: 40px;
+`;
 
 const Temp = styled.div`
-padding-top: 15px;
-`
+  padding-top: 15px;
+  font-weight: bold;
+`;
 
 const Container = styled.div`
-display: flex;
-justify-content: space-around;
-margin-top: 20px;
-border: 1px solid black;
-`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+`;
 
-const Button = styled.div`
-border: 1px solid black;
-text-align: center;
-padding-left: 10px;
-padding-right: 10px;
-height: 100%;
-display: flex;
-align-items: center;
-background: red;
-color: white;
-margin-top: 15px;
-`
+const Button = styled.button`
+  border: 1px solid black;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: red;
+  color: white;
+  margin-top: 15px;
+`;
 const Desc = styled.div`
-border: 1px solid black;
-text-align: center;
-margin-top: 10px;
-padding: 10px;
-`
-
+  border: 1px solid black;
+  font-weight: bold;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+  background: white;
+`;
 
 const Weather = (props) => {
   const [nameCity, setNameCity] = useState("");
   const [tempF, setTempF] = useState("");
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState("");
   const weatherF = tempF * 1.8 + 32;
   const conWeather = Math.trunc(weatherF);
-  const [unit, setUnit] = useState('')
-  const [descrip, setDescrip] = useState('')
-  const [feel, setFeel] = useState('')
+  const [unit, setUnit] = useState(true);
+  const [descrip, setDescrip] = useState("");
 
   const handleClick = () => {
     fetch(
@@ -70,37 +77,37 @@ const Weather = (props) => {
       .then((res) => {
         setNameCity(res.name);
         setTempF(res.main.temp);
-        setImg(res.weather[0].icon)
+        setImg(res.weather[0].icon);
         console.log(res);
         console.log(props.lng);
         console.log(props.lat);
-        let upper = res.weather[0].description
+        let upper = res.weather[0].description;
         let editD = upper.toUpperCase();
-        setDescrip(editD)
+        setDescrip(editD);
       });
   };
 
-  let icon = `http://openweathermap.org/img/w/${img}.png`
+  let icon = `http://openweathermap.org/img/w/${img}.png`;
 
   const tempC = (conWeather - 32) * 0.5556;
   const conTempC = Math.trunc(tempC);
+  const toggle = () => setUnit((unit) => !unit);
 
   useEffect(() => {
     handleClick();
-  });
+  }, []);
 
   return (
     <div>
-        <IconA>
-      <h2>{nameCity} </h2>
-      <Img src={icon}></Img>
+      <IconA>
+        <h2>{nameCity} </h2>
+        <Img src={icon}></Img>
       </IconA>
       <Desc>{descrip}</Desc>
       <Container>
-          
-      <Temp>Temp:</Temp>
-      <Wdes>{conWeather}&#8457;</Wdes>
-      <Button>C</Button>
+        <Temp>Temp:</Temp>
+        <Wdes>{unit ? Math.round(conWeather) + ' °F' : Math.round(conTempC)+ ' °C'}</Wdes>
+        <Button onClick={() => toggle()}>{unit ?  '°C' : '°F'}</Button>
       </Container>
     </div>
   );

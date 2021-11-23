@@ -9,7 +9,7 @@ import Loading from "./components/Loading";
 
 const Main = styled.div `
 background: rgb(255,253,208);
-background: linear-gradient(90deg, rgba(255,253,208,1) 0%, rgba(255,255,255,1) 100%);
+background: linear-gradient(90deg, rgba(2,253,208,.7) 20%, rgba(25,75,65,.8) 100%);
 height: 110vh;
 width: 100%;
 margin-top: -21px;
@@ -67,6 +67,7 @@ function App(props) {
       setStatus('Locating...');
       await navigator.geolocation.getCurrentPosition((position) => {
         setStatus(null);
+        console.log(status);
         setLat(position.coords.latitude);
         setLng(position.coords.longitude);
       }, () => {
@@ -78,7 +79,7 @@ function App(props) {
 useEffect(() => {
   getLocation();
   setLoading(true)
-    }, [])
+    },[])
 
     if(loading === true) {
       <NasaApi />
